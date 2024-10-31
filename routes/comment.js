@@ -4,7 +4,6 @@ const Comment=require('../models/Comment');
 const checkAuth = require('../middleware/checkAuth');
 const jwt=require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
-const { router } = require('../app');
 
 Router.post('/new-comment/:videoId',checkAuth,async(req,res)=>{
     try {
