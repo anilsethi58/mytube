@@ -22,7 +22,7 @@ const connectWithDb=async(req,res)=>{
 connectWithDb()
 
 
-app.use(cors)
+app.use(cors())
 app.use(bodyParser.json())
 
 app.use(fileUpload({
