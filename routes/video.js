@@ -9,11 +9,33 @@ const Video=require('../models/Video');
 
 
  // Configuration
- cloudinary.config({ 
+
+cloudinary.config({ 
     cloud_name: process.env.CLOUD_NAME ,
     api_key: process.env.API_KEY,  
     api_secret: process.env.API_SECRET // Click 'View API Keys' above to copy your API secret
 });
+
+// ...............get own channel videos.................
+Router.get('/own-video', checkAuth,async(req,res)=>{
+    try {
+        const token =req.headers.authorization.split(" ")[1]
+        const user=await jwt.verify(token,'anilsethi2024');
+        console.log(user);
+        const videos=await Video.find({user_id:user._id}).populate('user_id','channelName logoUrl')
+        res.status(200).json({
+            videos:videos
+        })
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error:err
+        })
+    }
+})
+
+
 // -----video upload------------
 
 Router.post('/upload',checkAuth,async(req,res)=>{
